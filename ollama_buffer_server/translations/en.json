@@ -1,0 +1,32 @@
+{
+  "configuration": {
+    "endpoint_address": {
+      "name": "Ollama API Endpoint",
+      "description": "The URL of your Ollama server (e.g., http://192.168.1.50:11434/api/generate)."
+    },
+    "auth_token": {
+      "name": "Authorization Token",
+      "description": "The Bearer token required for API access."
+    },
+    "max_concurrent_requests": {
+      "name": "Max Concurrent Requests",
+      "description": "How many AI generations can run at the same time."
+    },
+    "timeout": {
+      "name": "Request Timeout",
+      "description": "Seconds to wait for a response from Ollama."
+    },
+    "database_file": {
+      "name": "Database Path",
+      "description": "Location of the SQLite buffer database."
+    },
+    "log_level": {
+      "name": "Log Level",
+      "description": "Detail level of logs (info, debug, warning)."
+    },
+    "endpoints": {
+      "name": "Buffer Endpoints",
+      "description": "Configure your specific AI reply buffers here."
+    }
+  }
+}

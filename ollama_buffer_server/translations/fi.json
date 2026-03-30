@@ -1,0 +1,32 @@
+{
+  "configuration": {
+    "endpoint_address": {
+      "name": "Ollama API-osoite",
+      "description": "Ollama-palvelimesi URL-osoite (esim. http://192.168.1.50:11434/api/generate)."
+    },
+    "auth_token": {
+      "name": "Valtuutustunnus",
+      "description": "API-pääsyyn vaadittava Bearer-tunnus."
+    },
+    "max_concurrent_requests": {
+      "name": "Samanaikaiset pyynnöt (max)",
+      "description": "Kuinka monta tekoälyvastausta voidaan luoda samanaikaisesti."
+    },
+    "timeout": {
+      "name": "Pyynnön aikakatkaisu",
+      "description": "Odotusaika sekunteina Ollama-vastaukselle."
+    },
+    "database_file": {
+      "name": "Tietokannan polku",
+      "description": "SQLite-puskuritietokannan sijainti."
+    },
+    "log_level": {
+      "name": "Lokitaso",
+      "description": "Lokien yksityiskohtaisuus (info, debug, warning)."
+    },
+    "endpoints": {
+      "name": "Puskuripäätepisteet",
+      "description": "Määritä täällä eri tekoälyvastausten puskurit."
+    }
+  }
+}

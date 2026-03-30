@@ -38,6 +38,14 @@ options:
   }
   log_level: "INFO"
 schema:
+  endpoints:
+    - name: str
+      max_buffer_size: int
+      model: str
+      prompt_for_buffer: str?
+      temperature: float?
+      maintain_max_buffer: bool?
+      fallback_replies:
   endpoint_address: str
   auth_token: str
   max_concurrent_requests: int
