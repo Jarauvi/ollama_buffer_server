@@ -1,0 +1,46 @@
+{
+  "endpoint_address": "http://127.0.0.1:5000/api/generate",
+  "timeout": 300,
+  "auth_token": "your_secret_token_here",
+  "max_concurrent_requests": 5,
+  "fallback_replies": {
+    "weather": [
+      "Sääennuste ei ole saatavilla tällä hetkellä.",
+      "Ei voi näyttää säätä juuri nyt.",
+      "Tässä vaiheessa säätiedotusta ei saada."
+    ],
+    "news": [
+      "Uutiset eivät ole saatavilla.",
+      "Ei uusia uutisia tällä hetkellä."
+    ],
+    "jokes": [
+      "Vitsiä ei ole saatavilla juuri nyt.",
+      "Ei hauskoja juttuja tällä hetkellä."
+    ]
+  },
+  "endpoints": {
+    "weather": {
+      "max_buffer_size": 2,
+      "temperature": 0.85,
+      "maintain_max_buffer": true,
+      "prompt_for_buffer": "Tee lyhyt sääennuste Kuopion torilta tänään",
+      "model": "Llama-Poro-2-8B-Viaraleuka-Instruct-Q4_K_M"
+    },
+    "light_candles": {
+      "max_buffer_size": 2,
+      "temperature": 0.85,
+      "maintain_max_buffer": true,
+      "prompt_for_buffer": "Ilmoita, että kynttilät on sytytetty",
+      "model": "Llama-Poro-2-8B-Viaraleuka-Instruct-Q4_K_M"
+    },
+    "jokes": {
+      "max_buffer_size": 2,
+      "temperature": 0.9,
+      "maintain_max_buffer": true,
+      "prompt_for_buffer": "Kerro hauska savolainen vitsi",
+      "model": "Llama-Poro-2-8B-Viaraleuka-Instruct-Q4_K_M"
+    }
+  },
+  "database_file": "buffer.db",
+  "log_level": "INFO"
+}
