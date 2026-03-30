@@ -1,0 +1,4 @@
+name: Ollama Buffer Server
+url: "https://github.com/Jarauvi/ollama_buffer_server"
+maintainer: Jarno Auvinen
+description: A server that buffers responses from Ollama to speed up response times for frequently used prompts
