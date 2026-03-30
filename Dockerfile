@@ -1,14 +1,9 @@
-#!/usr/bin/env bash
-set -e
-
-# Default config path
-CONFIG_FILE="/data/options.json"
-if [ ! -f "$CONFIG_FILE" ]; then
-    CONFIG_FILE="/app/config.json"
-fi
-
-echo "Starting AI Buffer Server with config: $CONFIG_FILE"
-exec uvicorn server:app \
-    --host 0.0.0.0 \
-    --port 8000 \
-    --log-level info
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+FROM ${BUILD_FROM}
+RUN apk add --no-cache python3 py3-pip
+WORKDIR /app
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt --break-system-packages
+COPY . .
+RUN chmod a+x /app/run.sh
+CMD [ "/app/run.sh" ]

@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException, Request, Depends
-from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 import sqlite3
@@ -8,7 +7,7 @@ import random
 import httpx
 import asyncio
 import uvicorn
-from datetime import datetime
+from datetime import datetime, timezone
 
 # ---------------- Config ----------------
 import os
@@ -28,7 +27,7 @@ DB_FILE = config.get("database_file", "/data/buffer.db")
 semaphore = asyncio.Semaphore(MAX_CONCURRENT)
 
 def init_db():
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=10)
     c = conn.cursor()
     c.execute("""
         CREATE TABLE IF NOT EXISTS buffer (
@@ -78,7 +77,7 @@ async def auto_fill_buffer(endpoint: str, count: int):
                         }
                     )
                     data = response.json()
-                    text = data.get("completion") or data.get("response") or ""
+                    text = data.get("response") or data.get("text") or ""
                     if not text:
                         text = get_fallback(endpoint)
                 except Exception as e:
@@ -90,7 +89,7 @@ async def auto_fill_buffer(endpoint: str, count: int):
                 logger.info(f"Auto-filled reply for '{endpoint}': {text[:100]}{'...' if len(text)>100 else ''}")
 
 def add_to_buffer(endpoint: str, reply: str):
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=10)
     c = conn.cursor()
     c.execute(
         "INSERT INTO buffer (endpoint, reply, timestamp) VALUES (?, ?, ?)",
@@ -101,7 +100,7 @@ def add_to_buffer(endpoint: str, reply: str):
     logger.debug(f"Added reply to buffer for endpoint '{endpoint}': {reply[:50]}{'...' if len(reply)>50 else ''}")
 
 def read_from_buffer(endpoint: str, remove: bool = True):
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=10)
     c = conn.cursor()
     c.execute("SELECT rowid, reply, timestamp FROM buffer WHERE endpoint=? ORDER BY rowid ASC", (endpoint,))
     rows = c.fetchall()
@@ -122,7 +121,7 @@ def enforce_max_buffer(endpoint: str):
     max_size = ENDPOINTS.get(endpoint, {}).get("max_buffer_size")
     if not max_size:
         return
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=10)
     c = conn.cursor()
     c.execute("SELECT COUNT(*) FROM buffer WHERE endpoint=?", (endpoint,))
     count = c.fetchone()[0]
@@ -169,7 +168,7 @@ async def prefill_buffers_sequential():
     for endpoint, cfg in ENDPOINTS.items():
         if cfg.get("maintain_max_buffer") and cfg.get("max_buffer_size", 0) > 0:
             # Count current entries in DB
-            conn = sqlite3.connect(DB_FILE)
+            conn = sqlite3.connect(DB_FILE, timeout=10)
             c = conn.cursor()
             c.execute("SELECT COUNT(*) FROM buffer WHERE endpoint=?", (endpoint,))
             current_count = c.fetchone()[0]
@@ -189,7 +188,7 @@ async def write_buffer(req: WriteBufferRequest):
     logger.info(f"Write buffer request: endpoint={req.name}, count={req.count}, clear={req.clear}")
     async with semaphore:
         if req.clear:
-            conn = sqlite3.connect(DB_FILE)
+            conn = sqlite3.connect(DB_FILE, timeout=10)
             c = conn.cursor()
             c.execute("DELETE FROM buffer WHERE endpoint=?", (req.name,))
             conn.commit()
@@ -242,7 +241,7 @@ async def read_buffer_endpoint(req: ReadBufferRequest):
         # auto-refill if enabled
         endpoint_cfg = ENDPOINTS.get(req.name, {})
         if endpoint_cfg.get("maintain_max_buffer") and req.remove_from_buffer:
-            conn = sqlite3.connect(DB_FILE)
+            conn = sqlite3.connect(DB_FILE, timeout=10)
             c = conn.cursor()
             c.execute("SELECT COUNT(*) FROM buffer WHERE endpoint=?", (req.name,))
             current_count = c.fetchone()[0]
@@ -257,7 +256,7 @@ async def read_buffer_endpoint(req: ReadBufferRequest):
             asyncio.create_task(auto_fill_buffer(req.name, 1))
             await asyncio.sleep(0.1)
             text = get_fallback(req.name)
-            timestamp = datetime.utcnow().isoformat()
+            timestamp = datetime.now(timezone.utc).isoformat()
             logger.warning(f"No entry in buffer for '{req.name}', returning fallback.")
             return {"reply": text, "timestamp": timestamp, "fallback": True}
 
@@ -271,7 +270,7 @@ class ClearBufferRequest(BaseModel):
 @app.post("/clear_buffer", dependencies=[Depends(verify_token)])
 async def clear_buffer(req: ClearBufferRequest):
     async with semaphore:
-        conn = sqlite3.connect(DB_FILE)
+        conn = sqlite3.connect(DB_FILE, timeout=10)
         c = conn.cursor()
 
         if not req.buffer_name or req.buffer_name.lower() == "all":
@@ -297,7 +296,7 @@ class ListBufferRequest(BaseModel):
 @app.post("/list_buffer", dependencies=[Depends(verify_token)])
 async def list_buffer(req: ListBufferRequest):
     async with semaphore:
-        conn = sqlite3.connect(DB_FILE)
+        conn = sqlite3.connect(DB_FILE, timeout=10)
         c = conn.cursor()
         c.execute(
             "SELECT rowid, reply, timestamp FROM buffer WHERE endpoint=? ORDER BY rowid ASC",

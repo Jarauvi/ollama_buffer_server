@@ -10,7 +10,7 @@ arch:
 startup: "services"
 boot: "auto"
 map:
-  - config: /config/ai_buffer
+  - config:rw
 ports:
   8000/tcp: 8000
 options:
@@ -44,5 +44,5 @@ schema:
   max_concurrent_requests: int
   timeout: int
   database_file: str
-  endpoints: dict
+  endpoints: map
   log_level: str
