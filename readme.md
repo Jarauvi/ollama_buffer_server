@@ -12,21 +12,6 @@ This middleware acts as a **latency shock-absorber** between Home Assistant and 
 
 ## 🛠 Installation
 
-Since this is a custom local add-on, follow these steps to add it to your Home Assistant instance:
-
-Ah, you’re right! That’s the much "cleaner" way to do it. If you’ve hosted this on GitHub, the user just adds your repository URL to the "Repositories" list in the Add-on Store, and Home Assistant handles the rest.
-
-Here is the updated README.md with the GitHub-style installation instructions.
-Markdown
-
-# 🧠 AI Buffer Server for Home Assistant
-
-A high-performance middleware designed to eliminate LLM latency in your smart home. This add-on pre-generates AI responses in the background and stores them in a local SQLite database, allowing your automations to get instant, "thought-out" replies the millisecond a trigger occurs.
-
----
-
-## 🛠 Installation
-
 ### 1. Add the Repository
 1. In Home Assistant, navigate to **Settings** > **Add-ons**.
 2. Click the **Add-on Store** button in the bottom right.
