@@ -1,10 +1,9 @@
 name: Ollama Buffer Server
-version: "1.0.0"
+version: "0.1.0"
 slug: ollama_buffer_server
 description: "Buffer server for AI-generated replies"
 arch:
   - amd64
-  - armv7
   - arm64
   - aarch64
 startup: "services"
@@ -44,5 +43,5 @@ schema:
   max_concurrent_requests: int
   timeout: int
   database_file: str
-  endpoints: map
+  endpoints: match(.*\s*.*)
   log_level: str
