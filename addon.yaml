@@ -1,6 +1,6 @@
 name: Ollama Buffer Server
 version: "1.0.0"
-slug: ollama_buffer
+slug: ollama_buffer_server
 description: "Buffer server for AI-generated replies"
 arch:
   - amd64
