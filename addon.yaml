@@ -1,0 +1,48 @@
+name: AI Buffer Server
+version: "1.0.0"
+slug: ai_buffer
+description: "Buffer server for AI-generated replies"
+arch:
+  - amd64
+  - armv7
+  - arm64
+  - aarch64
+startup: "services"
+boot: "auto"
+map:
+  - config: /config/ai_buffer
+ports:
+  8000/tcp: 8000
+options:
+  endpoint_address: "http://127.0.0.1:11434/api/generate"
+  auth_token: "YOUR_SECRET_TOKEN"
+  max_concurrent_requests: 2
+  timeout: 10
+  database_file: "/data/buffer.db"
+  endpoints: {
+    "example_reply": {
+      "max_buffer_size": 1,
+      "temperature": 0.6,
+      "maintain_max_buffer": false,
+      "prompt_for_buffer": "Generate weather report",
+      "model": "MODEL_ON_YOUR_OLLAMA_SERVER", 
+      "fallback_replies": ["No reply", "Still no reply"]
+    },
+    "another_example": {
+      "max_buffer_size": 10,
+      "temperature": 0.9,
+      "maintain_max_buffer": true,
+      "prompt_for_buffer": "Generate poem about a blue cat",
+      "model": "MODEL_ON_YOUR_OLLAMA_SERVER", 
+      "fallback_replies": ["No reply", "Still no reply"]
+    }
+  }
+  log_level: "INFO"
+schema:
+  endpoint_address: str
+  auth_token: str
+  max_concurrent_requests: int
+  timeout: int
+  database_file: str
+  endpoints: dict
+  log_level: str
