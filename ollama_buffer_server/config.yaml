@@ -29,7 +29,7 @@ schema:
       temperature: float?
       maintain_max_buffer: bool?
       fallback_replies:
-  endpoint_address: st
+  endpoint_address: str
   auth_token: str
   max_concurrent_requests: int
   timeout: int
