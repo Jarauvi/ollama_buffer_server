@@ -1,5 +1,5 @@
 name: Ollama Buffer Server
-version: "0.1.0"
+version: "0.1.1"
 slug: ollama_buffer_server
 description: "Buffer server for AI-generated replies"
 arch:
@@ -18,24 +18,7 @@ options:
   max_concurrent_requests: 2
   timeout: 10
   database_file: "/data/buffer.db"
-  endpoints: {
-    "example_reply": {
-      "max_buffer_size": 1,
-      "temperature": 0.6,
-      "maintain_max_buffer": false,
-      "prompt_for_buffer": "Generate weather report",
-      "model": "MODEL_ON_YOUR_OLLAMA_SERVER", 
-      "fallback_replies": ["No reply", "Still no reply"]
-    },
-    "another_example": {
-      "max_buffer_size": 10,
-      "temperature": 0.9,
-      "maintain_max_buffer": true,
-      "prompt_for_buffer": "Generate poem about a blue cat",
-      "model": "MODEL_ON_YOUR_OLLAMA_SERVER", 
-      "fallback_replies": ["No reply", "Still no reply"]
-    }
-  }
+  endpoints: []
   log_level: "INFO"
 schema:
   endpoints:
@@ -46,7 +29,7 @@ schema:
       temperature: float?
       maintain_max_buffer: bool?
       fallback_replies:
-  endpoint_address: str
+  endpoint_address: st
   auth_token: str
   max_concurrent_requests: int
   timeout: int
