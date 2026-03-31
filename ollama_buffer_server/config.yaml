@@ -20,6 +20,7 @@ options:
   database_file: "/data/buffer.db"
   endpoints: []
   log_level: "info"
+  fallback_replies: []
 schema:
   endpoints:
     - name: str

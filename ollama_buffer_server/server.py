@@ -21,7 +21,11 @@ ENDPOINT_URL = config["endpoint_address"]
 AUTH_TOKEN = config["auth_token"]
 MAX_CONCURRENT = config["max_concurrent_requests"]
 TIMEOUT = config["timeout"]
-ENDPOINTS = config["endpoints"]
+raw_endpoints = config.get("endpoints", [])
+if isinstance(raw_endpoints, list):
+    ENDPOINTS = {item["name"]: item for item in raw_endpoints if "name" in item}
+else:
+    ENDPOINTS = raw_endpoints
 DB_FILE = config.get("database_file", "/data/buffer.db")
 
 semaphore = asyncio.Semaphore(MAX_CONCURRENT)

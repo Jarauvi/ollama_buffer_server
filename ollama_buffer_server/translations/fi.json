@@ -26,7 +26,37 @@
     },
     "endpoints": {
       "name": "Puskuripäätepisteet",
-      "description": "Määritä täällä eri tekoälyvastausten puskurit."
+      "description": "Lista ylläpidettävistä tekoälyvastauksista.",
+      "schema": {
+        "name": {
+          "name": "Päätepisteen nimi",
+          "description": "Yksilöllinen nimi, jota käytetään REST-komennoissa (esim. 'weather')."
+        },
+        "max_buffer_size": {
+          "name": "Puskurin koko (max)",
+          "description": "Kuinka monta valmista vastausta pidetään tietokannassa."
+        },
+        "model": {
+          "name": "Tekoälymalli",
+          "description": "Ollaman mallin nimi (esim. 'llama3')."
+        },
+        "prompt_for_buffer": {
+          "name": "Järjestelmäkehote (Prompt)",
+          "description": "Ohje, jota käytetään vastausten esigenerointiin."
+        },
+        "temperature": {
+          "name": "Lämpötila (Temperature)",
+          "description": "Säätelee luovuutta (0.0 = kirjaimellinen, 1.0 = luova)."
+        },
+        "maintain_max_buffer": {
+          "name": "Automaattinen täyttö",
+          "description": "Jos päällä, uusi vastaus luodaan heti kun puskurista käytetään yksi."
+        },
+        "fallback_replies": {
+          "name": "Varavastaukset",
+          "description": "Tekstivastaukset, jos tekoäly on offline-tilassa tai puskuri on tyhjä."
+        }
+      }
     }
   }
 }

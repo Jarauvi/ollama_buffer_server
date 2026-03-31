@@ -26,7 +26,37 @@
     },
     "endpoints": {
       "name": "Buffer Endpoints",
-      "description": "Configure your specific AI reply buffers here."
+      "description": "List of AI reply buffers to maintain.",
+      "schema": {
+        "name": {
+          "name": "Endpoint Name",
+          "description": "Unique ID used in your REST commands (e.g., 'weather')."
+        },
+        "max_buffer_size": {
+          "name": "Max Buffer Size",
+          "description": "How many pre-generated replies to keep in the database."
+        },
+        "model": {
+          "name": "AI Model",
+          "description": "The model name as defined in Ollama (e.g., 'llama3')."
+        },
+        "prompt_for_buffer": {
+          "name": "System Prompt",
+          "description": "The instruction used to generate the buffered replies."
+        },
+        "temperature": {
+          "name": "Temperature",
+          "description": "Controls creativity (0.0 = literal, 1.0 = creative)."
+        },
+        "maintain_max_buffer": {
+          "name": "Auto-Refill",
+          "description": "If enabled, a new reply is generated every time one is consumed."
+        },
+        "fallback_replies": {
+          "name": "Fallback Replies",
+          "description": "Simple text strings to return if the AI is offline or buffer is empty."
+        }
+      }
     }
   }
 }
