@@ -4,7 +4,6 @@ slug: ollama_buffer_server
 description: "Buffer server for AI-generated replies"
 arch:
   - amd64
-  - armv7
   - aarch64
 startup: "services"
 boot: "auto"
@@ -28,7 +27,7 @@ schema:
       prompt_for_buffer: str?
       temperature: float?
       maintain_max_buffer: bool?
-      fallback_replies:
+      fallback_replies: list(str)?
   endpoint_address: str
   auth_token: str
   max_concurrent_requests: int
