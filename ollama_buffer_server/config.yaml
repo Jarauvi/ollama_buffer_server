@@ -19,7 +19,7 @@ options:
   timeout: 10
   database_file: "/data/buffer.db"
   endpoints: []
-  log_level: "INFO"
+  log_level: "info"
 schema:
   endpoints:
     - name: str
@@ -34,5 +34,4 @@ schema:
   max_concurrent_requests: int
   timeout: int
   database_file: str
-  endpoints: match(.*\s*.*)
-  log_level: str
+  log_level: "list(trace|debug|info|warning|error|fatal|off)"
