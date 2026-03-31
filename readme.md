@@ -1,4 +1,4 @@
-# Ollama Buffer Server
+# Ollama Buffer Server -Addon for Home Assistant
 
 This middleware acts as a **latency shock-absorber** between Home Assistant and local LLMs (like Ollama) with budget inference setups. Instead of making your smart home wait 30-300 seconds for a CPU/GPU to generate a response, this service pre-generates replies like reports or summaries in the background and stores them in a local SQLite database for instant retrieval.
 
