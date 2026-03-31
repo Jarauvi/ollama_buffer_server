@@ -1,5 +1,5 @@
 name: Ollama Buffer Server
-version: "0.1.3"
+version: "0.1.4"
 slug: ollama_buffer_server
 init: false
 description: "Buffer server for AI-generated replies"
@@ -20,7 +20,8 @@ options:
   database_file: "/data/buffer.db"
   endpoints: []
   log_level: "info"
-  fallback_replies: []
+  fallback_replies: 
+    - "Sorry, I'm having trouble processing your request right now."
 schema:
   endpoints:
     - name: str
@@ -29,7 +30,8 @@ schema:
       prompt_for_buffer: str?
       temperature: float?
       maintain_max_buffer: bool?
-      fallback_replies: list(str)?
+      fallback_replies:
+        - str
   endpoint_address: str
   auth_token: str
   max_concurrent_requests: int
