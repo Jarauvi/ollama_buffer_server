@@ -1,5 +1,5 @@
 name: Ollama Buffer Server
-version: "0.1.4"
+version: "0.1.5"
 slug: ollama_buffer_server
 init: false
 description: "Buffer server for AI-generated replies"

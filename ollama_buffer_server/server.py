@@ -85,7 +85,7 @@ async def auto_fill_buffer(endpoint: str, count: int):
                     if not text:
                         text = get_fallback(endpoint)
                 except Exception as e:
-                    logger.error(f"Auto-fill error for '{endpoint}': {e}")
+                    logger.error(f"Auto-fill error for '{endpoint}': {e}", exc_info=True)
                     text = get_fallback(endpoint)
 
                 add_to_buffer(endpoint, text)
